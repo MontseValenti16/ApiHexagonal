@@ -30,6 +30,7 @@ func main() {
     viewStudentUseCase := application.NewViewStudentUseCase(studentRepo)
     updateStudentUseCase := application.NewUpdateStudentUseCase(studentRepo)
     deleteStudentUseCase := application.NewDeleteStudentUseCase(studentRepo)
+    viewStudentIDUseCase := application.NewViewStudentIDUseCase(studentRepo)
 
     createSubjectUseCase := application.NewCreateSubjectUseCase(subjectRepo)
     viewSubjectUseCase := application.NewViewSubjectUseCase(subjectRepo)
@@ -41,6 +42,7 @@ func main() {
         viewStudentUseCase,
         updateStudentUseCase,
         deleteStudentUseCase,
+        viewStudentIDUseCase,
     )
 
     subjectController := controllers.NewSubjectController(

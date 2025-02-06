@@ -61,3 +61,13 @@ func (repo *StudentRepositoryImpl) ExistsByEmail(email string) (bool, error) {
     err := db.DB.QueryRow(query, email).Scan(&count)
     return count > 0, err
 }
+
+func (repo *StudentRepositoryImpl) GetById(id int) (*entities.Student, error) {
+    query := "SELECT id, name, email, age, grade FROM students WHERE id = ?"
+    row := db.DB.QueryRow(query, id)
+
+    var student entities.Student
+    if err := row.Scan(&student.ID, &student.Name, &student.Email, &student.Age, &student.Grade); err != nil {
+        return nil, err
+    }
+    return &student, nil}

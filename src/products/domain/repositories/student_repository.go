@@ -9,4 +9,5 @@ type StudentRepository interface {
 	Delete(id int) error
 	ExistsById(id int) (bool, error)
 	ExistsByEmail(email string) (bool, error)
+	GetById(id int) (*entities.Student, error)
 }

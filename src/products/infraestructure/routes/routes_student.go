@@ -12,5 +12,6 @@ func RegisterStudentRoutes(router *gin.Engine, studentController *controllers.St
         studentGroup.POST("/", studentController.CreateStudent)
         studentGroup.PUT("/:id", studentController.UpdateStudent)
         studentGroup.DELETE("/:id", studentController.DeleteStudent)
+        studentGroup.GET("/:id", studentController.GetStudentByID)
     }
 }

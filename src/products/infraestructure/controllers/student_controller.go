@@ -13,6 +13,7 @@ import (
 		viewStudentUseCase   *application.ViewStudentUseCase
 		updateStudentUseCase *application.UpdateStudentUseCase
 		deleteStudentUseCase *application.DeleteStudentUseCase
+        viewStudentIDUseCase *application.ViewStudentIDUseCase 
 	}
 	
 	func NewStudentController(
@@ -20,12 +21,14 @@ import (
 		viewStudentUseCase *application.ViewStudentUseCase,
 		updateStudentUseCase *application.UpdateStudentUseCase,
 		deleteStudentUseCase *application.DeleteStudentUseCase,
+        viewStudentIDUseCase *application.ViewStudentIDUseCase,
 	) *StudentController {
 		return &StudentController{
 			createStudentUseCase: createStudentUseCase,
 			viewStudentUseCase:   viewStudentUseCase,
 			updateStudentUseCase: updateStudentUseCase,
 			deleteStudentUseCase: deleteStudentUseCase,
+            viewStudentIDUseCase: viewStudentIDUseCase,
 		}
 	}
 
@@ -88,4 +91,20 @@ func (s *StudentController) DeleteStudent(c *gin.Context) {
     }
 
     c.JSON(http.StatusOK, gin.H{"message": "Estudiante eliminado correctamente"})
+}
+
+func (s *StudentController) GetStudentByID(c *gin.Context) {
+    id, err := strconv.Atoi(c.Param("id"))
+    if err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": "ID inválido"})
+        return
+    }
+
+    student, err := s.viewStudentIDUseCase.Execute(id)
+    if err != nil {
+        c.JSON(http.StatusInternalServerError, gin.H{"error": "No se pudo obtener el estudiante"})
+        return
+    }
+
+    c.JSON(http.StatusOK, student)
 }
